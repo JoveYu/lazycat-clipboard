@@ -8,7 +8,7 @@ const collection = db.getCollection(SETTINGS_COLLECTION)
 
 const defaultSettings: AppSettings = {
   enablePin: true,
-  copyMode: 'single-tap'
+  copyMode: 'double-tap'
 }
 
 export async function loadSettings(): Promise<AppSettings> {

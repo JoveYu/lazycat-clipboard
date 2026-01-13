@@ -26,27 +26,6 @@ const { isSyncing } = useClipboardItems()
                 同步中…
             </div>
         </div>
-        <div class="fixed right-7 bottom-22 z-30 flex flex-col items-center gap-2">
-            <button
-                class="w-12 h-12 rounded-full bg-white shadow-[var(--shadow-apple)] border border-[var(--color-apple-gray-100)] flex items-center justify-center text-[var(--color-apple-gray-700)] hover:shadow-[var(--shadow-apple-lg)] active:scale-95 transition-all"
-                @click="clipboardListRef?.toggleMultiSelect()" title="多选编辑">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M7 6h10M7 10h6M7 14h4M7 18h8" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.5 9.5L18 12l3.5-3.5" />
-                </svg>
-            </button>
-            <button
-                class="w-12 h-12 rounded-full bg-white shadow-[var(--shadow-apple)] border border-[var(--color-apple-gray-100)] flex items-center justify-center text-[var(--color-apple-gray-700)] hover:shadow-[var(--shadow-apple-lg)] active:scale-95 transition-all"
-                @click="emit('open-settings')" title="设置中心">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37a1.724 1.724 0 002.572-1.065z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-            </button>
-        </div>
         <FloatingAddButton />
     </div>
 </template>
