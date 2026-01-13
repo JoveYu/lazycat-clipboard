@@ -4,8 +4,8 @@ import FloatingAddButton from '@/components/input/FloatingAddButton.vue'
 </script>
 
 <template>
-  <div class="min-h-screen pb-24 px-4 pt-4 hide-scrollbar">
-    <ClipboardList />
+  <div class="h-screen flex flex-col pb-24 px-4 pt-4 overflow-y-auto hide-scrollbar">
+    <ClipboardList class="flex-1" />
     <FloatingAddButton />
   </div>
 </template>

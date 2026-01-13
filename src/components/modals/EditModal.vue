@@ -38,9 +38,8 @@ watch(() => props.visible, (newVal) => {
     nextTick(() => {
       if (isText.value) {
         textareaRef.value?.focus()
-      } else if (isImage.value) {
-        imageRef.value?.focus()
       }
+      // For image modal, don't auto-focus on the image
     })
   }
 })
@@ -85,9 +84,8 @@ function handleKeyDown(e: KeyboardEvent) {
 
       cycleFocus(focusOrder, e.shiftKey)
     } else if (isImage.value) {
-      // Image modal: image -> cancel -> delete -> image
+      // Image modal: cancel -> delete -> cancel
       const focusOrder = [
-        imageRef.value,
         imageCancelButtonRef.value,
         imageDeleteButtonRef.value
       ].filter(Boolean) as HTMLElement[]
@@ -162,8 +160,7 @@ onUnmounted(() => {
             <div
               v-else-if="isImage && isImageItem(item)"
               ref="imageRef"
-              tabindex="0"
-              class="rounded-[var(--radius-apple)] focus:outline-none focus:ring-2 focus:ring-[var(--color-hermes-orange)]"
+              class="rounded-[var(--radius-apple)]"
             >
               <ImagePreview
                 v-if="item.blob"
