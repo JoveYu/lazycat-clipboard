@@ -17,7 +17,6 @@ const emit = defineEmits<{
 
 const editContent = ref('')
 const textareaRef = ref<HTMLTextAreaElement | null>(null)
-const imageRef = ref<HTMLDivElement | null>(null)
 const deleteButtonRef = ref<HTMLButtonElement | null>(null)
 const cancelButtonRef = ref<HTMLButtonElement | null>(null)
 const saveButtonRef = ref<HTMLButtonElement | null>(null)

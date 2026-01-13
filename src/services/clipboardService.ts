@@ -7,7 +7,12 @@ import type { ClipboardItem, TextClipboardItem, ImageClipboardItem, ClipboardMet
  */
 export async function getAllItems(): Promise<ClipboardItem[]> {
   const docs = await clipboardCollection.find({}, { sort: ['order'] }).fetch()
-  return Promise.all(docs.map(doc => hydrateItem(doc as any)))
+  const sorted = docs.slice().sort((a: any, b: any) => {
+    const orderA = normalizeOrder(a?.order)
+    const orderB = normalizeOrder(b?.order)
+    return orderA - orderB
+  })
+  return Promise.all(sorted.map(doc => hydrateItem(doc as any)))
 }
 
 /**
@@ -177,6 +182,12 @@ async function hydrateItem(doc: any): Promise<ClipboardItem> {
   }
 
   return doc as ClipboardItem
+}
+
+function normalizeOrder(order: unknown): number {
+  if (typeof order === 'number') return order
+  const parsed = Number(order)
+  return Number.isFinite(parsed) ? parsed : Number.MAX_SAFE_INTEGER
 }
 
 /**
