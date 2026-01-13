@@ -26,8 +26,9 @@ function handleEdit(e: Event) {
 
 <template>
   <div
-    class="relative bg-white rounded-[var(--radius-apple-lg)] shadow-[var(--shadow-apple)] p-4 cursor-pointer transition-all hover:shadow-[var(--shadow-apple-lg)] group overflow-hidden outline-none"
+    class="clipboard-item relative bg-white rounded-[var(--radius-apple-lg)] shadow-[var(--shadow-apple)] p-4 cursor-pointer transition-all hover:shadow-[var(--shadow-apple-lg)] group overflow-hidden outline-none select-none"
     @click="handleClick"
+    @contextmenu.prevent
     tabindex="0"
     role="button"
     :aria-label="isTextItem(item) ? `复制文字: ${item.content.slice(0, 50)}` : '复制图片'"
@@ -98,3 +99,14 @@ function handleEdit(e: Event) {
     </div>
   </div>
 </template>
+
+<style scoped>
+.clipboard-item {
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+}
+
+.clipboard-item img {
+  -webkit-touch-callout: none;
+}
+</style>

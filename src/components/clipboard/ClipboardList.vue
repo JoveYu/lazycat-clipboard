@@ -62,6 +62,13 @@ function handleDragEnd() {
   reorderItems([...items.value])
 }
 
+function handleDragStart() {
+  // 触发手机震动反馈
+  if (navigator.vibrate) {
+    navigator.vibrate(50)
+  }
+}
+
 // Setup keyboard shortcuts
 useKeyboardShortcuts({
   items,
@@ -84,7 +91,12 @@ const dragOptions = computed(() => ({
   animation: 200,
   group: 'clipboard-items',
   disabled: false,
-  ghostClass: 'ghost'
+  ghostClass: 'ghost',
+  delay: 800,
+  delayOnTouchOnly: true,
+  touchStartThreshold: 20,
+  forceFallback: true,
+  fallbackTolerance: 5
 }))
 </script>
 
@@ -105,6 +117,7 @@ const dragOptions = computed(() => ({
       v-model="items"
       v-bind="dragOptions"
       item-key="id"
+      @start="handleDragStart"
       @end="handleDragEnd"
       class="space-y-3"
     >

@@ -37,7 +37,16 @@ onUnmounted(() => {
       v-if="imageUrl"
       :src="imageUrl"
       alt="Clipboard image"
-      class="max-w-full max-h-[250px] rounded-lg object-contain"
+      class="max-w-full max-h-[250px] rounded-lg object-contain select-none"
+      draggable="false"
     />
   </div>
 </template>
+
+<style scoped>
+img {
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+</style>
