@@ -7,34 +7,34 @@ const selectedIndex = ref(-1)
 const isLoading = ref(false)
 
 export function useClipboardItems() {
-async function loadItems(options: { silent?: boolean } = {}) {
-  const silent = options.silent ?? false
-  if (!silent) {
-    isLoading.value = true
-  }
-  try {
-    const newItems = await clipboardService.getAllItems()
-    if (!itemsEqual(items.value, newItems)) {
-      items.value = newItems
-    }
-  } finally {
+  async function loadItems(options: { silent?: boolean } = {}) {
+    const silent = options.silent ?? false
     if (!silent) {
-      isLoading.value = false
+      isLoading.value = true
+    }
+    try {
+      const newItems = await clipboardService.getAllItems()
+      if (!itemsEqual(items.value, newItems)) {
+        items.value = newItems
+      }
+    } finally {
+      if (!silent) {
+        isLoading.value = false
+      }
     }
   }
-}
 
   async function addText(content: string) {
     if (!content.trim()) return
-    const item = await clipboardService.addTextItem(content.trim())
-    items.value.push(item)
-    selectedIndex.value = items.value.length - 1
+    await clipboardService.addTextItem(content.trim())
+    await loadItems({ silent: true })
+    selectedIndex.value = 0
   }
 
   async function addImage(blob: Blob, mimeType: string) {
-    const item = await clipboardService.addImageItem(blob, mimeType)
-    items.value.push(item)
-    selectedIndex.value = items.value.length - 1
+    await clipboardService.addImageItem(blob, mimeType)
+    await loadItems({ silent: true })
+    selectedIndex.value = 0
   }
 
   async function updateText(id: string, content: string) {

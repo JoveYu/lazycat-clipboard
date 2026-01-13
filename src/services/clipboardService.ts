@@ -7,11 +7,7 @@ import type { ClipboardItem, TextClipboardItem, ImageClipboardItem, ClipboardMet
  */
 export async function getAllItems(): Promise<ClipboardItem[]> {
   const docs = await clipboardCollection.find({}, { sort: ['order'] }).fetch()
-  const sorted = docs.slice().sort((a: any, b: any) => {
-    const orderA = normalizeOrder(a?.order)
-    const orderB = normalizeOrder(b?.order)
-    return orderA - orderB
-  })
+  const sorted = docs.slice().sort(compareDocs)
   return Promise.all(sorted.map(doc => hydrateItem(doc as any)))
 }
 
@@ -20,7 +16,7 @@ export async function getAllItems(): Promise<ClipboardItem[]> {
  */
 export async function addTextItem(content: string): Promise<TextClipboardItem> {
   const items = await getAllItems()
-  const maxOrder = items.length > 0 ? Math.max(...items.map(i => i.order)) : -1
+  const minOrder = getMinOrder(items)
 
   const itemToSave: TextClipboardItem = {
     id: uuidv4(),
@@ -28,7 +24,7 @@ export async function addTextItem(content: string): Promise<TextClipboardItem> {
     content,
     createdAt: Date.now(),
     updatedAt: Date.now(),
-    order: maxOrder + 1
+    order: minOrder - 1
   }
 
   await clipboardCollection.upsert(itemToSave)
@@ -40,7 +36,7 @@ export async function addTextItem(content: string): Promise<TextClipboardItem> {
  */
 export async function addImageItem(blob: Blob, mimeType: string): Promise<ImageClipboardItem> {
   const items = await getAllItems()
-  const maxOrder = items.length > 0 ? Math.max(...items.map(i => i.order)) : -1
+  const minOrder = getMinOrder(items)
 
   // 将 Blob 转换为 base64
   const imageData = await blobToBase64(blob)
@@ -52,7 +48,7 @@ export async function addImageItem(blob: Blob, mimeType: string): Promise<ImageC
     mimeType,
     createdAt: Date.now(),
     updatedAt: Date.now(),
-    order: maxOrder + 1
+    order: minOrder - 1
   }
 
   await clipboardCollection.upsert(itemToSave)
@@ -188,6 +184,36 @@ function normalizeOrder(order: unknown): number {
   if (typeof order === 'number') return order
   const parsed = Number(order)
   return Number.isFinite(parsed) ? parsed : Number.MAX_SAFE_INTEGER
+}
+
+function compareDocs(a: any, b: any): number {
+  const orderA = normalizeOrder(a?.order)
+  const orderB = normalizeOrder(b?.order)
+  if (orderA !== orderB) return orderA - orderB
+
+  const updatedA = normalizeTimestamp(a?.updatedAt)
+  const updatedB = normalizeTimestamp(b?.updatedAt)
+  if (updatedA !== updatedB) return updatedB - updatedA
+
+  const createdA = normalizeTimestamp(a?.createdAt)
+  const createdB = normalizeTimestamp(b?.createdAt)
+  return createdB - createdA
+}
+
+function normalizeTimestamp(value: unknown): number {
+  const num = Number(value)
+  return Number.isFinite(num) ? num : 0
+}
+
+function getMinOrder(items: ClipboardItem[]): number {
+  const finiteOrders = items
+    .map(i => normalizeOrder(i.order))
+    .filter(n => Number.isFinite(n) && n !== Number.MAX_SAFE_INTEGER)
+
+  // 如果现有数据没有合法的 order，使用 0 作为起点，保证新数据置顶
+  if (finiteOrders.length === 0) return 0
+
+  return Math.min(...finiteOrders)
 }
 
 /**

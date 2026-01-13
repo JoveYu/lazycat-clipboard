@@ -12,7 +12,7 @@ import { isTextItem } from '@/types/clipboard'
 
 const { updateText, deleteItem, loadItems, isLoading } = useClipboardItems()
 const { lastCopyMessage, copyEventId } = useClipboard()
-const showDebugTools = import.meta.env.VITE_SHOW_DEBUG_TOOLS === 'true'
+const showDebugTools = import.meta.env.VITE_SHOW_DEBUG_TOOLS === 'true' || import.meta.env.DEV
 
 // Modal states
 const editModalVisible = ref(false)
