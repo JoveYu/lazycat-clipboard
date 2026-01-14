@@ -106,7 +106,7 @@ function handleEdit(e: Event) {
     >
       <button
         @click="handleCopyButton"
-        class="item-btn p-2.5 rounded-lg active:bg-[var(--color-apple-gray-200)] transition-colors"
+        class="item-btn p-2.5 rounded-lg transition-colors"
         title="复制"
       >
         <svg class="w-5 h-5 text-[var(--color-apple-gray-500)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -116,7 +116,7 @@ function handleEdit(e: Event) {
 
       <button
         @click="handleEdit"
-        class="item-btn p-2.5 rounded-lg active:bg-[var(--color-apple-gray-200)] transition-colors"
+        class="item-btn p-2.5 rounded-lg transition-colors"
         title="编辑"
       >
         <svg class="w-5 h-5 text-[var(--color-apple-gray-500)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -132,7 +132,7 @@ function handleEdit(e: Event) {
     >
       <button
         @click="handleCopyButton"
-        class="item-btn p-2.5 rounded-lg active:bg-[var(--color-apple-gray-200)] transition-colors"
+        class="item-btn p-2.5 rounded-lg transition-colors"
         title="复制"
       >
         <svg class="w-5 h-5 text-[var(--color-apple-gray-500)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -142,7 +142,7 @@ function handleEdit(e: Event) {
 
       <button
         @click="handleEdit"
-        class="item-btn p-2.5 rounded-lg active:bg-[var(--color-apple-gray-200)] transition-colors"
+        class="item-btn p-2.5 rounded-lg transition-colors"
         title="编辑"
       >
         <svg class="w-5 h-5 text-[var(--color-apple-gray-500)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -163,10 +163,18 @@ function handleEdit(e: Event) {
   -webkit-touch-callout: none;
 }
 
-/* Only apply hover effect on devices that support true hover (not touch) */
-@media (hover: hover) {
+/* Remove tap highlight on mobile */
+.item-btn {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Only apply hover/active effects on desktop */
+@media (min-width: 768px) {
   .item-btn:hover {
     background-color: var(--color-apple-gray-100);
+  }
+  .item-btn:active {
+    background-color: var(--color-apple-gray-200);
   }
 }
 
