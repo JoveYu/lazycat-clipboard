@@ -82,3 +82,19 @@ body {
 ::selection {
   background-color: color-mix(in srgb, var(--color-apple-blue) 20%, transparent);
 }
+
+/* Sortable.js drag styles */
+.sortable-chosen {
+  opacity: 1 !important;
+}
+
+.sortable-ghost,
+.ghost {
+  opacity: 0.4 !important;
+  background: var(--color-apple-gray-100) !important;
+}
+
+/* Hide the original element being dragged in fallback mode */
+.sortable-fallback {
+  opacity: 1 !important;
+}

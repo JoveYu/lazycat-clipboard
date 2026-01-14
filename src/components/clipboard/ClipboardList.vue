@@ -409,7 +409,8 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-.ghost {
+/* Use :deep() to apply ghost style to draggable elements */
+:deep(.ghost) {
   opacity: 0.5;
   background: var(--color-apple-gray-100);
 }
