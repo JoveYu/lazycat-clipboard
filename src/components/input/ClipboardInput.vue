@@ -147,6 +147,7 @@ onUnmounted(() => {
 
       <div class="relative">
         <textarea
+          spellcheck="false"
           ref="textareaRef"
           v-model="textInput"
           placeholder="请输入需要发送的文字"

@@ -132,6 +132,7 @@ onUnmounted(() => {
           <!-- Content -->
           <div class="p-4">
             <textarea
+              spellcheck="false"
               v-model="textInput"
               placeholder="请输入需要发送的文字"
               class="w-full h-32 p-3 border border-[var(--color-apple-gray-100)] rounded-[var(--radius-apple)] resize-none focus:outline-none focus:ring-1 focus:ring-[var(--color-hermes-orange)] focus:border-transparent text-[var(--color-apple-gray-900)] placeholder-[var(--color-apple-gray-500)]"
